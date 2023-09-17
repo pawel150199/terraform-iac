@@ -6,9 +6,9 @@ resource "hcloud_volume" "web_servers_volume" {
     format = "xfs"
 }
 
-resource "hcloud_attachment" "web_servers_volume_attachement" {
+resource "hcloud_volume_attachment" "web_servers_volume_attachement" {
     count = var.instances
     volume_id = hcloud_volume.web_servers_volume[count.index].id
-    server_id = hcloud_server[count.index].web.id
+    server_id = hcloud_server.web[count.index].id
     automount = true
 }

@@ -23,14 +23,14 @@ resource "hcloud_load_balancer_service" "web_lb_service" {
     load_balancer_id = hcloud_load_balancer.web_lb.id
     protocol = var.http_protocol
     listen_port = var.http_port
-    destination_port = var.destination_port
+    destination_port = var.http_port
 
     health_check {
         protocol = var.http_protocol
         port = var.http_port
         interval = "10"
         timeout = "10"
-        http = {
+        http  {
             path = "/"
             status_codes = ["2??", "3??"]
         }

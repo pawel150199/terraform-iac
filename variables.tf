@@ -15,7 +15,7 @@ variable "http_port" {
 }
 
 variable "instances" {
-  default = "1"
+  default = "2"
 }
 
 variable "server_type" {
@@ -23,7 +23,7 @@ variable "server_type" {
 }
 
 variable "os_type" {
-  default = "rocky-8.8"
+  default = "ubuntu-20.04"
 }
 
 variable "network_zone" {
