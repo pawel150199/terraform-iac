@@ -3,7 +3,7 @@ resource "hcloud_load_balancer" "web_lb" {
     load_balancer_type = "lb11"
     location = var.location
     labels = {
-        typw = "web"
+        type = "web"
     }
 
     dynamic "target" {
