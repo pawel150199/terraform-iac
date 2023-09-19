@@ -1,0 +1,24 @@
+# cloud-config
+users:
+  - name: wg_user
+    groups: users, admin
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    shell: /bin/bash
+    ssh_authorized_keys:
+      - ssh_rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCs/3tpFxSV+mvM9FmboM9T01Cq1kMN8ndPbbW1/h7+aSSvu0XtpV/hOHyniDSUjZ8Uj/2b4LmN+3DhA/9qd8M2kE3bcuA6mZaTWBKDw9/6pfx1AAm1hNQifDz2RKIHGe10KztRU1hl+PcE9re2LtkyPWD2jI3cPOJlwWRA6lDmh5NIAE/+WgmhoI5XH2EKv87pRDSXdIu4UgNtBPv3sFWb8wtX3Op47HngDsDT0L4vWuLTDVJijDIN20LIFXD3NCodzKd9l6ltP8Htkt93P1wYmiZnZm7QhNJq/+21IwEnhe+z826KzznDVAScntaWrdaAK2IBeXEESfgwaApP7DgqE5ZflNeDQATtewM5KJPuvQuva9LSew1M8nPjiiwJqf7e5c6tsjczxRnzXOewUdlI0k9sq8XScgDDiiainPGfJ2z0Jo1+1FUeV8a08YgEJv6lLNFz4pa65LxqyHQTpsmjYY87dXj2923OMIPvrD17s1t5c9Flr+Qpmr/2Go8D+EJVi49nHsSdoyZ+FFDHZYqSQpptvlB1PA6VVvPGd98sfnHv/sZkeCgn035keMqVc0bhHyhzJbqgYSgFf8/J71LYDJ1LQfV8WsKTM3887L7BOMnqo7Gsa2XXcu5GkhRMx+eCHBghO6wrqKuZKp7weNNmQNCs29z2mUY4IVZMbD+vHQ== pawelpolski@MacBook-Air-Pawe.local
+package_update: true
+package_upgrade: true
+package:
+  - ufw
+runcmd:
+  - ufw enable 'OpenSSH'
+  - ufw enable 
+  - sed -ie '/^PermitRootLogin/s/^.*$/PermitRootLogin no/' /etc/ssh/sshd_config
+  - sed -ie '/^PasswordAuthentication/s/^.*$/PasswordAuthentication no/' /etc/ssh/sshd_config
+  - sed -ie '/^X11Forwarding/s/^.*$/X11Forwarding no/' /etc/ssh/sshd_config
+  - sed -ie '/^#MaxAuthTries/s/^.*$/MaxAuthTries 2/' /etc/ssh/sshd_config
+  - sed -ie '/^#AllowTcpForwarding/s/^.*$/AllowTcpForwarding no/' /etc/ssh/sshd_config
+  - sed -ie '/^#AllowAgentForwarding/s/^.*$/AllowAgentForwarding no/' /etc/ssh/sshd_config
+  - sed -ie '/^#AuthorizedKeysFile/s/^.*$/AuthorizedKeysFile .ssh/authorized_keys/' /etc/ssh/sshd_config
+  - sed -i '$a AllowUsers wg_user' /etc/ssh/sshd_config
+  - systemctl restart ssh
