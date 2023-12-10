@@ -1,6 +1,7 @@
 ### Terraform ###
 # Local .terraform directories
 **/.terraform/*
+simple-ec2
 
 # .tfstate files
 .terraform.lock.hcl
