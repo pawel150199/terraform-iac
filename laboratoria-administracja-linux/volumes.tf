@@ -1,5 +1,5 @@
 resource "hcloud_volume" "lab_volume" {
-    name = "robocik-volume-1"
+    name = "lab-volume-1"
     size = var.disk_size
     location = var.location
     format = "xfs"
